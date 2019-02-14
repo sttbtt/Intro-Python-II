@@ -1,4 +1,5 @@
 from room import Room
+from item import Item
 
 # Declare all the rooms
 
@@ -32,3 +33,15 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+
+
+# Declare all items
+
+item = {
+    'sword': Item("Sword", "Large sharp sword"),
+    'knife': Item("Knife", "A pointy knife"),
+    'axe': Item("Axe", "A dull axe"),
+    'coins': Item("Coins", "Shinny golden coins"),
+    'rock': Item("Rock", "Yes, a rock")
+
+}
