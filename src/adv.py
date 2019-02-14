@@ -1,23 +1,20 @@
-# Clear Screen
-from os import system, name
-def clear():
-    if name == 'nt':
-        _ = system('cls')
-    else:
-        _ = system('clear')
-
-clear()
-
+# Imports
+from functions import clear
 from room import Room
 from player import Player
+import item
 from data import *
 
 #
 # Main
 #
 
+clear()
+print('n -> North, s -> South, e -> East, w -> West\nl -> List room items, i -> Show your inventory\nh -> Help, q -> Quit\n')
+
 # Make a new player object that is currently in the 'outside' room.
 player = Player("Scott", room['outside'])
+player.inventory.append
 
 def try_direction(direction, current_room):
     attribute = direction + '_to'
@@ -53,12 +50,16 @@ while True:
             break
         
         if s == 'l':
-            print(item)
-
+            print(f'Items in room: \n')
+            
         if s == 'i':
-            print(player.inventory)
+            print(f'Your inventory: \n')
+            
+        if s == 'h':
+            print('n -> North, s -> South, e -> East, w -> West\nl -> List room items, i -> Show your inventory\nh -> Help, q -> Quit\n')
         
-        player.current_room = try_direction(s, player.current_room)
+        if s == 'n' or s == 's' or s == 'e' or s == 'w':
+            player.current_room = try_direction(s, player.current_room)
 
     elif len(s) == 2:
         first_word = s[0]
