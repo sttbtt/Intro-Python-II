@@ -4,14 +4,14 @@
 from item import Item
 
 class Room():
-    def __init__(self, name, description):
+    def __init__(self, name, description, items):
         self.name = name
         self.description = description
-        self.items = []
+        self.items = items
 
     def print_items(self):
         for item in self.items:
-            print(item, '\n')
+            print(f'{item.name} - {item.description}')
 
     def __repr__(self):
-        return f"{self.name}, {self.description}"
+        return f"{self.name} - {self.description}"

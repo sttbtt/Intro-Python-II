@@ -1,8 +1,8 @@
 # Imports
-from functions import clear
+from my_functions import *
 from room import Room
 from player import Player
-import item
+from item import *
 from data import *
 
 #
@@ -10,36 +10,32 @@ from data import *
 #
 
 clear()
-print('n -> North, s -> South, e -> East, w -> West\nl -> List room items, i -> Show your inventory\nh -> Help, q -> Quit\n')
+print('n -> North, s -> South, e -> East, w -> West\nl -> List room items, i -> Show your inventory\nget item, drop item\nh -> Help, q -> Quit\n')
 
 # Make a new player object that is currently in the 'outside' room.
-player = Player("Scott", room['outside'])
-player.inventory.append
-
-def try_direction(direction, current_room):
-    attribute = direction + '_to'
-
-    if hasattr(current_room, attribute):
-        return getattr(current_room, attribute)
-    else:
-        print("Invalid direction!")
-        return current_room
+player = Player("Scott", room['outside'], [])
+room['outside'].items.append(item['sword'])
+room['outside'].items.append(item['knife'])
+room['foyer'].items.append(item['knife'])
+room['overlook'].items.append(item['rock'])
+room['narrow'].items.append(item['axe'])
+room['treasure'].items.append(item['coins'])
+# player.items.append(item['sword'])
 
 # Write a loop that:
 #
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
 
 # If the user enters "q", quit the game.
 
 while True:
-    
+    # * Prints the current room name
     print(player.current_room.name)
+    # * Prints the current description (the textwrap module might be useful here).
     print(player.current_room.description)
+ 
+    # * Waits for user input and decides what to do.
     s = input("\n> ").lower().split()
 
     if len(s) == 1:
@@ -50,23 +46,49 @@ while True:
             break
         
         if s == 'l':
-            print(f'Items in room: \n')
-            
+            player.current_room.print_items()
+            continue
+
         if s == 'i':
-            print(f'Your inventory: \n')
+            player.print_inventory()
+            continue
             
         if s == 'h':
-            print('n -> North, s -> South, e -> East, w -> West\nl -> List room items, i -> Show your inventory\nh -> Help, q -> Quit\n')
+            print('n -> North, s -> South, e -> East, w -> West\nl -> List room items, i -> Show your inventory\nget item, drop item\nh -> Help, q -> Quit\n')
         
         if s == 'n' or s == 's' or s == 'e' or s == 'w':
             player.current_room = try_direction(s, player.current_room)
+        else:
+            print("I don't understand that direction.")
+        continue
 
     elif len(s) == 2:
-        first_word = s[0]
-        second_word = s[1]
+        action = s[0]
+        the_item = s[1]
+        # print(action, the_item)
+        # print(player.current_room.items)
+        # print(player.items.count("Sword"))
+        
 
-        if first_word in ['get', 'drop']:
-            print(first_word, second_word)
+        if action in ['get', 'drop']:
+            if action == 'get':
+                # TODO figure out if the_item is in items
+                if the_item == the_item:
+                    player.items.append(item[the_item])
+                    player.current_room.items.remove(item[the_item])
+                    # TODO add on_take
+                else:
+                    print("That item is not in this room.")
+            elif action == 'drop':
+                # TODO figure out if the_item is in items
+                if the_item == the_item:
+                    player.items.remove(item[the_item])
+                    player.current_room.items.append(item[the_item])
+                    # TODO add on_drop
+                else:
+                    print("You don't have the item.")
+        else:
+            print("I don't understand that.")
     
     else:
         print("I don't understand that.")
