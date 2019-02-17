@@ -10,7 +10,7 @@ from data import *
 #
 
 clear()
-print('n -> North, s -> South, e -> East, w -> West\nl -> List room items, i -> Show your inventory\nget item, drop item\nh -> Help, q -> Quit\n')
+print('N -> North, S -> South, E -> East, W -> West\nL -> List room items, I -> Show your inventory\nget \'item\', drop \'item\'\nh -> Help, q -> Quit\n')
 
 # Make a new player object that is currently in the 'outside' room.
 player = Player("Scott", room['outside'], [])
@@ -19,8 +19,11 @@ room['outside'].items.append(item['knife'])
 room['foyer'].items.append(item['knife'])
 room['overlook'].items.append(item['rock'])
 room['narrow'].items.append(item['axe'])
-room['treasure'].items.append(item['coins'])
+room['treasure'].items.append(item['coin'])
 # player.items.append(item['sword'])
+# player.items.append(item['knife'])
+# player.items.append(item['rock'])
+# player.items.append(item['axe'])
 
 # Write a loop that:
 #
@@ -31,6 +34,7 @@ room['treasure'].items.append(item['coins'])
 
 while True:
     # * Prints the current room name
+    print('\nLocation:')
     print(player.current_room.name)
     # * Prints the current description (the textwrap module might be useful here).
     print(player.current_room.description)
@@ -54,7 +58,7 @@ while True:
             continue
             
         if s == 'h':
-            print('n -> North, s -> South, e -> East, w -> West\nl -> List room items, i -> Show your inventory\nget item, drop item\nh -> Help, q -> Quit\n')
+            print('N -> North, S -> South, E -> East, W -> West\nL -> List room items, I -> Show your inventory\nget \'item\', drop \'item\'\nh -> Help, q -> Quit\n')
         
         if s == 'n' or s == 's' or s == 'e' or s == 'w':
             player.current_room = try_direction(s, player.current_room)
@@ -72,21 +76,23 @@ while True:
 
         if action in ['get', 'drop']:
             if action == 'get':
+                player.get_item(the_item)
                 # TODO figure out if the_item is in items
-                if the_item == the_item:
-                    player.items.append(item[the_item])
-                    player.current_room.items.remove(item[the_item])
-                    # TODO add on_take
-                else:
-                    print("That item is not in this room.")
+                # if the_item == the_item:
+                #     player.items.append(item[the_item])
+                #     player.current_room.items.remove(item[the_item])
+                #     # TODO add on_take
+                # else:
+                #     print("That item is not in this room.")
             elif action == 'drop':
-                # TODO figure out if the_item is in items
-                if the_item == the_item:
-                    player.items.remove(item[the_item])
-                    player.current_room.items.append(item[the_item])
-                    # TODO add on_drop
-                else:
-                    print("You don't have the item.")
+                player.drop_item(the_item)
+                # # TODO figure out if the_item is in items
+                # if the_item == the_item:
+                #     player.items.remove(item[the_item])
+                #     player.current_room.items.append(item[the_item])
+                #     # TODO add on_drop
+                # else:
+                #     print("You don't have the item.")
         else:
             print("I don't understand that.")
     

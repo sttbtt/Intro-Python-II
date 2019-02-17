@@ -10,6 +10,7 @@ class Room():
         self.items = items
 
     def print_items(self):
+        print('This room contains:')
         for item in self.items:
             print(f'{item.name} - {item.description}')
 
